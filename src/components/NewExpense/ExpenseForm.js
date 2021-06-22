@@ -5,17 +5,10 @@ const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
+  const [visible, setVisible] = useState(false);
 
-  //   const [userInputs, setUserInputs] = useState({
-  //     enteredTitle: "",
-  //     enteredAmount: "",
-  //     enteredDate: "",
-  //   });
   const titleChangeHandler = (event) => {
     setEnteredTitle(event.target.value);
-    // setUserInputs((prevState) => {
-    //   return { ...prevState, enteredTitle: event.target.value };
-    // });
   };
   const amountChangeHandler = (event) => {
     setEnteredAmount(event.target.value);
@@ -28,7 +21,7 @@ const ExpenseForm = (props) => {
 
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate),
     };
 
@@ -37,6 +30,24 @@ const ExpenseForm = (props) => {
     setEnteredAmount("");
     setEnteredDate("");
   };
+  if (!visible) {
+    return (
+      <form onSubmit={sumbitHandler}>
+        <div className="new-expense__controls">
+          <button
+            className="visibility-button"
+            type="button"
+            onClick={() => {
+              setVisible(true);
+            }}
+          >
+            Add Expense!
+          </button>
+        </div>
+      </form>
+    );
+  }
+
   return (
     <form onSubmit={sumbitHandler}>
       <div className="new-expense__controls">
@@ -71,6 +82,17 @@ const ExpenseForm = (props) => {
       </div>
       <div className="new-expense__actions">
         <button type="submit">Add Expense</button>
+        <button
+          type="button"
+          onClick={() => {
+            setVisible(false);
+            setEnteredAmount("");
+            setEnteredDate("");
+            setEnteredTitle("");
+          }}
+        >
+          Cancel
+        </button>
       </div>
     </form>
   );

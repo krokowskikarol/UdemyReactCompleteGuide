@@ -24,3 +24,7 @@
 .new-expense__actions {
   text-align: right;
 }
+.visibility-button {
+  position: relative;
+  left: 40%;
+}
